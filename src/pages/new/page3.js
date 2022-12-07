@@ -41,7 +41,7 @@ const Page2 = () => {
   const [counter, setCounter] = React.useState(1);
   const [address,setAddress]= React.useState('')
   const [details,setDetails]= React.useState(0)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = React.useState(false)
 
   const increment = () => setCounter(counter + 1);
 
@@ -71,10 +71,11 @@ const Page2 = () => {
 
   const mintNft =async() =>{
     try {
-      console.log("jdfh")
+      setLoading(true)
       await assetMint.mint(1,address)
+      setLoading(false)
     } catch (error) {
-      
+      setLoading(false)
     }
   }
 

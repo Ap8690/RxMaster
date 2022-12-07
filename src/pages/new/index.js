@@ -105,8 +105,7 @@ const Page2 = () => {
       const total = await nftMint.totalSupply()
       setTotalSupply(total)
       const time = await nftMint.endTime()
-      console.log('tiem ofa seofja',time)
-      setEndTime(new Date(time))
+      setEndTime(new Date(time*1000))
     } catch (error) {
       console.log(error)
     }
@@ -129,9 +128,11 @@ const Page2 = () => {
 
   const mintNft =async() =>{
     try {
+      setLoading(true)
       await nftMint.mint(counter,(counter*price).toString())
+      setLoading(false)
     } catch (error) {
-      
+      setLoading(false)
     }
   }
 

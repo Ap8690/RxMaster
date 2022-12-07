@@ -48,7 +48,7 @@ const Page2 = () => {
   const [isWhileList,setIsWhiteList]= React.useState(false)
   const [totalMinted,setTotalMinted]= React.useState(0)
   const [endTime,setEndTime]= React.useState(new Date("07-25-2023"))
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = React.useState(false)
 
   const getData = async() =>{
     try {
@@ -66,7 +66,7 @@ const Page2 = () => {
       const minted = await nftMint.whiteListMinted()
       setTotalMinted(minted)
       const time = await nftMint.whiteListEnd()
-      // setEndTime(time*1000)
+      setEndTime(new Date(time*1000))
     } catch (error) {
       console.log(error)
     }
@@ -95,10 +95,11 @@ const Page2 = () => {
 
   const mintNft =async() =>{
     try {
-      console.log("jdfh")
+      setLoading(true)
       await nftMint.mint(counter,(counter*price).toString())
+      setLoading(false)
     } catch (error) {
-      
+      setLoading(false)
     }
   }
 

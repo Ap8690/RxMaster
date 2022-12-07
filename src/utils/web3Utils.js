@@ -2,7 +2,32 @@ import Web3 from "web3";
 import { assetAbi, assetAddress, nftAbi, nftAddress } from "./config";
 
 export const connectWallet = async() => {
-   return await window.ethereum.request({ methods: 'eth_requestAccounts' });
+   await window.ethereum.request({ methods: 'eth_requestAccounts' });
+   try {
+          return await window?.ethereum?.request({
+              method: "wallet_switchEthereumChain",
+              params: [
+                  {
+                      chainId: "0x13881",
+                  },
+              ],
+          });
+  } catch (error) {
+      console.log(error,"error")
+      if (error?.code?.toString() === "4902") {
+          try {
+                  await window?.ethereum?.request({
+                      method: "wallet_addEthereumChain",
+                      params: "0x13881",
+                  });
+                  connectWallet()
+          } catch (addError) {
+              throw new Error(addError);
+          }
+      } else {
+          throw new Error(error);
+      }
+  }
    if(window.ethereum){
    const web3 = new Web3(Web3.givenProvider)
    const addresses = await web3.eth.getAccounts()
@@ -67,7 +92,7 @@ export const nftMint = {
    },
    whiteListEnd : async() =>{
       const nftContract = nftInstance()
-      return await nftContract.methods.whiteListEnd().call()
+      return await nftContract.methods.whitelistEnd().call()
    },
    whiteListMinted : async() =>{
       const nftContract = nftInstance()
