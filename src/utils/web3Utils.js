@@ -2,9 +2,10 @@ import Web3 from "web3";
 import { assetAbi, assetAddress, nftAbi, nftAddress } from "./config";
 
 export const connectWallet = async() => {
-   await window.ethereum.request({ methods: 'eth_requestAccounts' });
    try {
-          return await window?.ethereum?.request({
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+   try {
+           await window?.ethereum?.request({
               method: "wallet_switchEthereumChain",
               params: [
                   {
@@ -32,7 +33,11 @@ export const connectWallet = async() => {
    const web3 = new Web3(Web3.givenProvider)
    const addresses = await web3.eth.getAccounts()
    localStorage.setItem("address",addresses[0])
+   console.log("kfdhohdf")
    return addresses[0]
+   }
+   } catch (error) {
+      console.log(error)
    }
 }
 
