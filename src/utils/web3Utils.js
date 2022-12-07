@@ -2,7 +2,7 @@ import Web3 from "web3";
 import { assetAbi, assetAddress, nftAbi, nftAddress } from "./config";
 
 export const connectWallet = async() => {
-   // return await window.ethereum.request({ methods: 'eth_requestAccounts' });
+   return await window.ethereum.request({ methods: 'eth_requestAccounts' });
    if(window.ethereum){
    const web3 = new Web3(Web3.givenProvider)
    const addresses = await web3.eth.getAccounts()

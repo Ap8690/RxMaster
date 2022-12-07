@@ -4,6 +4,9 @@ import { connectWallet } from "@utils/web3Utils";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import {nftMint} from "@utils/web3Utils"
+import CountdownTimer from "@components/countdown/Countdown";
+import MintBtn from "@components/mint-btn/MintBtn";
+import { useState } from "react";
 
 const WalletConnection = ({ setConnection }) => {
   return (
@@ -90,7 +93,8 @@ const Page2 = () => {
   const [price, setPrice] = React.useState(0)
   const [address,setAddress]= React.useState('')
   const [totalSupply,setTotalSupply]= React.useState(0)
-  const [endTime,setEndTime]= React.useState(0)
+  const [endTime,setEndTime]= React.useState(new Date('07-25-2023'))
+  const [loading, setLoading] = useState(false)
 
   const getData = async() =>{
     try {
@@ -101,7 +105,8 @@ const Page2 = () => {
       const total = await nftMint.totalSupply()
       setTotalSupply(total)
       const time = await nftMint.endTime()
-      setEndTime(time*1000)
+      console.log('tiem ofa seofja',time)
+      setEndTime(new Date(time))
     } catch (error) {
       console.log(error)
     }
@@ -186,16 +191,16 @@ const Page2 = () => {
                   className="mb-4"
                 >
                   <div
-                    className="d-flex justify-content-around align-items-center"
-                    style={{ height: "inherit" }}
+                    style={{ height: "inherit", padding: "1.5rem 3rem" }}
                   >
-                    <TimerDigit value={new Date(endTime).getDay()} helperText="days" />
+                    {/* <TimerDigit value={new Date(endTime).getDay()} helperText="days" />
                     <TimeSpliting />
                     <TimerDigit value={new Date(endTime).getHours()} helperText="hours" />
                     <TimeSpliting />
                     <TimerDigit value={new Date(endTime).getMinutes()} helperText="mins" />
                     <TimeSpliting />
-                    <TimerDigit value={new Date(endTime).getSeconds()} helperText="sec" />
+                    <TimerDigit value={new Date(endTime).getSeconds()} helperText="sec" /> */}
+                    <CountdownTimer date={endTime} />
                   </div>
                 </div>
                 <div>
@@ -327,8 +332,9 @@ const Page2 = () => {
                     </div>
                   </div>
                 </div> */}
-                <div className="text-center">
-                  <img className="bbtn" src={"/images/new/wbtn2.png"} onClick={mintNft}/> :
+                <div className="flex-center">
+                  {/* <img className="bbtn" src={"/images/new/wbtn2.png"} onClick={mintNft}/> */}
+                  <MintBtn loading={loading} onClick={mintNft} />
                 </div>
               </div>
             </div>

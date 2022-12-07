@@ -41,6 +41,7 @@ const Page2 = () => {
   const [counter, setCounter] = React.useState(1);
   const [address,setAddress]= React.useState('')
   const [details,setDetails]= React.useState(0)
+  const [loading, setLoading] = useState(false)
 
   const increment = () => setCounter(counter + 1);
 
@@ -273,8 +274,9 @@ const Page2 = () => {
                     </div>
                   </div>
                 </div> */}
-                <div className="text-center">
-                  <img className="bbtn" src={"/images/new/wbtn2.png"} onClick={mintNft}/>
+                <div className="flex-center">
+                  {/* <img className="bbtn" src={"/images/new/wbtn2.png"} onClick={mintNft}/> */}
+                  <MintBtn loading={loading} onClick={mintNft} />
                 </div>
               </div>
             </div>
