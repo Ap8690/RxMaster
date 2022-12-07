@@ -3,7 +3,9 @@ import Wrapper from "@layout/wrapper";
 import React, { useEffect } from "react";
 import withNoSSR from "./withNoSsr";
 import { TimeSpliting, TimerDigit } from './index'
-import { assetMint } from "@utils/web3Utils";
+import { assetMint, connectWallet } from "@utils/web3Utils";
+import { toast } from "react-toastify";
+import MintBtn from "@components/mint-btn/MintBtn";
 
 const WalletConnection = ({ setConnection }) => {
   return (
@@ -291,6 +293,25 @@ const Page2 = () => {
 const New = () => {
   const [isConnected, setConnection] = React.useState(false);
 
+  const connect = async() =>{
+    try {
+      const address = await connectWallet()
+      if(address){
+        setConnection(true)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Can't connect Wallet!")
+    }
+  }
+
+  useEffect(()=>{
+    const address = localStorage.getItem("address")
+    if(address){
+      setConnection(true)
+    }
+  },[])
+
   return (
     <Wrapper>
       <Header />
@@ -299,7 +320,11 @@ const New = () => {
         className=""
         style={{ background: "#6a2d28" }}
       >
-        <Page2 />
+        {!isConnected ? (
+          <WalletConnection setConnection={connect} />
+        ) : (
+          <Page2 />
+        )}
       </main>
     </Wrapper>
   );
