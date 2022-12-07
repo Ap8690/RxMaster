@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "text": "Who we are ",
+        "path": "#whoweare"
+    },
+    {
+        "id": 2,
+        "text": "Artist",
+        "path": "#artist"
+    },
+    {
+        "id": 3,
+        "text": "Roadmap",
+        "path": "#roadmap"
+    },
+    {
+        "id": 4,
+        "text": "Team",
+        "path": "#team"
+    },
+    {
+        "id": 5,
+        "text": "Partners",
+        "path": "#partners"
+    }
+]

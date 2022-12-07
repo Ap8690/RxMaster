@@ -1,0 +1,30 @@
+{
+    "id": "contact-data-01",
+    "map": {
+        "lat": -12.043333,
+        "lng": -77.028333,
+        "mapKey": "AIzaSyB3mMuvl8IUlviRZiizBiX7uhsdIqunx94"
+    },
+    "socials": [
+        {
+            "id": 1,
+            "icon": "feather-facebook",
+            "link": "https://www.facebook.com/RX-Series-101590005985364/",
+            "title": "Facebook"
+        },
+        {
+            "id": 2,
+            "icon": "feather-twitter",
+            "link": "https://twitter.com/RX669series",
+            "title": "Twitter"
+        },
+      
+        {
+            "id": 3,
+            "icon": "feather-linkedin",
+            "link": "https://linkedin.com/in/RX669SERIES",
+            "title": "linkedin"
+        }
+      
+    ]
+}
