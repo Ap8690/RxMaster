@@ -3,7 +3,7 @@ import Wrapper from "@layout/wrapper";
 import React, { useEffect } from "react";
 import withNoSSR from "./withNoSsr";
 import { TimeSpliting, TimerDigit } from './index'
-import { connectWallet, nftMint } from "@utils/web3Utils";
+import { connectWallet, getAccount, nftMint } from "@utils/web3Utils";
 import CountdownTimer from "@components/countdown/Countdown";
 import MintBtn from "@components/mint-btn/MintBtn";
 import { toast } from "react-toastify";
@@ -322,7 +322,8 @@ const New = () => {
   const connect = async() =>{
     try {
       const address = await connectWallet()
-      if(address){
+      const addresses = await getAccount()
+      if(address&&addresses&&addresses[0]){
         setConnection(true)
       }
     } catch (error) {
@@ -331,9 +332,10 @@ const New = () => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(async()=>{
     const address = localStorage.getItem("address")
-    if(address){
+    const account = await getAccount()
+    if(address&&account&&account[0]){
       setConnection(true)
     }
   },[])

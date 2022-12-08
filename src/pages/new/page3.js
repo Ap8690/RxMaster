@@ -3,7 +3,7 @@ import Wrapper from "@layout/wrapper";
 import React, { useEffect } from "react";
 import withNoSSR from "./withNoSsr";
 import { TimeSpliting, TimerDigit } from './index'
-import { assetMint, connectWallet } from "@utils/web3Utils";
+import { assetMint, connectWallet, getAccount } from "@utils/web3Utils";
 import { toast } from "react-toastify";
 import MintBtn from "@components/mint-btn/MintBtn";
 
@@ -44,6 +44,7 @@ const Page2 = () => {
   const [address,setAddress]= React.useState('')
   const [details,setDetails]= React.useState(0)
   const [loading, setLoading] = React.useState(false)
+  const [userMinted, setUserMinted] = React.useState(0)
 
   const increment = () => setCounter(counter + 1);
 
@@ -60,8 +61,9 @@ const Page2 = () => {
       const address = localStorage.getItem("address")
       setAddress(address)
       const details = await assetMint.assetDetails(1)
-      console.log(details,"details")
       setDetails(details)
+      const userMints = await assetMint.userMinted(address,1)
+      setUserMinted(userMints)
     } catch (error) {
       console.log(error)
     }
@@ -120,7 +122,7 @@ const Page2 = () => {
                   }}
                   className="mb-4"
                 >
-                  END OF SALE
+                  START OF SALE
                 </p>
                 <div
                   id="timer"
@@ -296,7 +298,8 @@ const New = () => {
   const connect = async() =>{
     try {
       const address = await connectWallet()
-      if(address){
+      const addresses = await getAccount()
+      if(address&&addresses&&addresses[0]){
         setConnection(true)
       }
     } catch (error) {
@@ -305,9 +308,10 @@ const New = () => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(async()=>{
     const address = localStorage.getItem("address")
-    if(address){
+    const account = await getAccount()
+    if(address&&account&&account[0]){
       setConnection(true)
     }
   },[])

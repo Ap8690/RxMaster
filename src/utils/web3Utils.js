@@ -45,6 +45,11 @@ const getWeb3 = () =>{
    return new Web3(Web3.givenProvider)
 }
 
+export const getAccount = async() =>{
+   const web3 = new Web3(Web3.givenProvider)
+   return await web3.eth.getAccounts()
+}
+
 const nftInstance = () =>{
    const web3 = getWeb3()
    return new web3.eth.Contract(nftAbi,nftAddress)

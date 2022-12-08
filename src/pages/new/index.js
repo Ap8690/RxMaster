@@ -1,6 +1,6 @@
 import Header from "@layout/header/header-01";
 import Wrapper from "@layout/wrapper";
-import { connectWallet } from "@utils/web3Utils";
+import { connectWallet, getAccount } from "@utils/web3Utils";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import {nftMint} from "@utils/web3Utils"
@@ -104,7 +104,7 @@ const Page2 = () => {
       setPrice(price)
       const total = await nftMint.totalSupply()
       setTotalSupply(total)
-      const time = await nftMint.endTime()
+      const time = await nftMint.startTime()
       setEndTime(new Date(time*1000))
     } catch (error) {
       console.log(error)
@@ -175,7 +175,7 @@ const Page2 = () => {
                   }}
                   className="mb-4"
                 >
-                  END OF SALE
+                  START OF SALE
                 </p>
 
                 <div
@@ -352,7 +352,8 @@ const New = () => {
   const connect = async() =>{
     try {
       const address = await connectWallet()
-      if(address){
+      const addresses = await getAccount()
+      if(address&&addresses&&addresses[0]){
         setConnection(true)
       }
     } catch (error) {
@@ -361,9 +362,10 @@ const New = () => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(async()=>{
     const address = localStorage.getItem("address")
-    if(address){
+    const account = await getAccount()
+    if(address&&account&&account[0]){
       setConnection(true)
     }
   },[])
