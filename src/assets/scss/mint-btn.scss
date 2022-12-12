@@ -12,6 +12,7 @@
   background-image: url(/images/wbtn122.png);
   background-size: cover;
   color: #fff;
+  cursor: pointer;
   .lds-ring {
     display: inline-block;
     position: relative;
@@ -89,6 +90,10 @@
   }
   .lds-ring div:nth-child(3) {
     animation-delay: -0.15s;
+  }
+  &:disabled{
+    filter: grayscale(100%);
+    cursor: not-allowed;
   }
   @keyframes lds-ring {
     0% {
