@@ -98,7 +98,7 @@ export const nftMint = {
    },
    whiteListStart : async() =>{
       const nftContract = nftInstance()
-      return await nftContract.methods.whiteListStart().call()
+      return await nftContract.methods.whitelistStart().call()
    },
    whiteListEnd : async() =>{
       const nftContract = nftInstance()
@@ -115,6 +115,10 @@ export const nftMint = {
    maxWhileListMintUser : async() =>{
       const nftContract = nftInstance()
       return await nftContract.methods.maximumWhitelistMintByUser().call()
+   },
+   wlMintByUser : async(address) =>{
+      const nftContract = nftInstance()
+      return await nftContract.methods.whitelistMintByUser(address).call()
    },
    totalWhileListMintedUser : async(address) =>{
       const nftContract = nftInstance()
@@ -151,6 +155,10 @@ export const assetMint = {
    userMinted : async(address,assetId) =>{
       const nftContract = assetInstance()
       return await nftContract.methods.freeMint(address,assetId).call()
+   },
+   startTime : async() =>{
+      const nftContract = assetInstance()
+      return await nftContract.methods.giveawayStart().call()
    },
    mint : async(assetId,address) =>{
       const nftContract = assetInstance()

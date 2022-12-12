@@ -7,6 +7,7 @@ import { connectWallet, getAccount, nftMint } from "@utils/web3Utils";
 import CountdownTimer from "@components/countdown/Countdown";
 import MintBtn from "@components/mint-btn/MintBtn";
 import { toast } from "react-toastify";
+import DisBtn from "@components/mint-btn/Disabled";
 
 const WalletConnection = ({ setConnection }) => {
   return (
@@ -49,14 +50,15 @@ const Page2 = () => {
   const [isWhileList,setIsWhiteList]= React.useState(false)
   const [totalMinted,setTotalMinted]= React.useState(0)
   const [endTime,setEndTime]= React.useState(new Date("07-25-2023"))
+  const [startTime,setStartTime]= React.useState(new Date("07-25-2023"))
   const [loading, setLoading] = React.useState(false)
+  const [wlMintByUser, setWlMintByUser] = React.useState(0)
 
   const getData = async() =>{
     try {
       const address = localStorage.getItem("address")
       setAddress(address)
       const isWhiteList = await nftMint.isWhiteListed(address)
-      console.log(isWhiteList,"isWhiteList")
       setIsWhiteList(isWhiteList)
       const price = await nftMint.whiteListPrice()
       setPrice(price)
@@ -66,8 +68,13 @@ const Page2 = () => {
       setTotalSupply(total)
       const minted = await nftMint.whiteListMinted()
       setTotalMinted(minted)
-      const time = await nftMint.whiteListEnd()
-      setEndTime(new Date(time*1000))
+      const time = await nftMint.whiteListStart()
+      setStartTime(new Date(time*1000))
+      const wlMintUser = await nftMint.wlMintByUser(address)
+      console.log(maxMint,wlMintUser,"anything")
+      setWlMintByUser(wlMintUser)
+      const endTime = await nftMint.whiteListEnd()
+      setEndTime(new Date(endTime*1000))
     } catch (error) {
       console.log(error)
     }
@@ -75,7 +82,7 @@ const Page2 = () => {
 
   useEffect(()=>{
     getData()
-  },[])
+  },[loading])
 
 
   const increment = async() => {
@@ -99,6 +106,7 @@ const Page2 = () => {
       setLoading(true)
       await nftMint.mint(counter,(counter*price).toString())
       setLoading(false)
+      toast.success("NFT Minted Successfully!")
     } catch (error) {
       setLoading(false)
     }
@@ -143,7 +151,7 @@ const Page2 = () => {
                   }}
                   className="mb-4"
                 >
-                  END OF SALE
+                  SALE BEGINS IN
                 </p>
 
                 <div
@@ -169,7 +177,7 @@ const Page2 = () => {
                     <TimerDigit value={new Date(endTime).getMinutes()} helperText="mins" />
                     <TimeSpliting />
                     <TimerDigit value={new Date(endTime).getSeconds()} helperText="sec" /> */}
-                    <CountdownTimer date={endTime} />
+                    <CountdownTimer date={startTime} />
                   </div>
                 </div>
                 <div>
@@ -301,10 +309,16 @@ const Page2 = () => {
                     </div>
                   </div>
                 </div> */}
+                {console.log(endTime)}
                 <div className="flex-center">
                   { 
-                    isWhileList ? <MintBtn loading={loading} onClick={mintNft} /> :
-                      <img className="bbtn" src={"/images/new/wbtn3.png"}/>
+                    endTime>new Date() ? 
+                    isWhileList ?
+                    Number(maxMint)>Number(wlMintByUser) ? 
+                    <MintBtn loading={loading} onClick={mintNft} />
+                    : <DisBtn textForButton={`User can only mint ${maxMint} NFTs`}/> 
+                    : <img className="bbtn" src={"/images/new/wbtn3.png"}/>
+                    : <DisBtn textForButton={`Whitelist Sale Ended`}/> 
                   }
                 </div>
               </div>

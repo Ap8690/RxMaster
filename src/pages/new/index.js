@@ -113,10 +113,17 @@ const Page2 = () => {
 
   useEffect(()=>{
     getData()
-  },[])
+  },[loading])
 
 
-  const increment = () => setCounter(counter + 1);
+  const increment = () => {
+    if (counter > (6200-totalSupply)) {
+      return;
+    } else {
+      setCounter(counter - 1);
+    }
+    setCounter(counter + 1)
+  };
 
   const decrement = () => {
     if (counter <= 1) {
@@ -131,6 +138,7 @@ const Page2 = () => {
       setLoading(true)
       await nftMint.mint(counter,(counter*price).toString())
       setLoading(false)
+      toast.success("NFT Minted Successfully!")
     } catch (error) {
       setLoading(false)
     }
@@ -175,7 +183,7 @@ const Page2 = () => {
                   }}
                   className="mb-4"
                 >
-                  START OF SALE
+                  SALE BEGINS IN
                 </p>
 
                 <div

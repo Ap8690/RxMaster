@@ -6,6 +6,8 @@ import { TimeSpliting, TimerDigit } from './index'
 import { assetMint, connectWallet, getAccount } from "@utils/web3Utils";
 import { toast } from "react-toastify";
 import MintBtn from "@components/mint-btn/MintBtn";
+import CountdownTimer from "@components/countdown/Countdown";
+import DisBtn from "@components/mint-btn/Disabled";
 
 const WalletConnection = ({ setConnection }) => {
   return (
@@ -45,11 +47,12 @@ const Page2 = () => {
   const [details,setDetails]= React.useState(0)
   const [loading, setLoading] = React.useState(false)
   const [userMinted, setUserMinted] = React.useState(0)
+  const [startTime,setStartTime]= React.useState(new Date("07-25-2023"))
 
   const increment = () => setCounter(counter + 1);
 
   const decrement = () => {
-    if (counter <= 1) {
+    if (counter !== 1) {
       return;
     } else {
       setCounter(counter - 1);
@@ -64,6 +67,8 @@ const Page2 = () => {
       setDetails(details)
       const userMints = await assetMint.userMinted(address,1)
       setUserMinted(userMints)
+      const time = await assetMint.startTime()
+      setStartTime(new Date(time*1000))
     } catch (error) {
       console.log(error)
     }
@@ -71,13 +76,14 @@ const Page2 = () => {
 
   useEffect(()=>{
     getData()
-  },[])
+  },[loading])
 
   const mintNft =async() =>{
     try {
       setLoading(true)
       await assetMint.mint(1,address)
       setLoading(false)
+      toast.success("NFT Minted Successfully!")
     } catch (error) {
       setLoading(false)
     }
@@ -122,7 +128,7 @@ const Page2 = () => {
                   }}
                   className="mb-4"
                 >
-                  START OF SALE
+                  SALE BEGINS IN
                 </p>
                 <div
                   id="timer"
@@ -138,16 +144,16 @@ const Page2 = () => {
                   className="mb-4"
                 >
                   <div
-                    className="d-flex justify-content-around align-items-center"
-                    style={{ height: "inherit" }}
+                      style={{ height: "inherit", padding: "1.5rem 3rem" }}
                   >
-                    <TimerDigit value="00" helperText="days" />
+                    {/* <TimerDigit value="00" helperText="days" />
                     <TimeSpliting />
                     <TimerDigit value="00" helperText="hours" />
                     <TimeSpliting />
                     <TimerDigit value="00" helperText="mins" />
                     <TimeSpliting />
-                    <TimerDigit value="00" helperText="sec" />
+                    <TimerDigit value="00" helperText="sec" /> */}
+                    <CountdownTimer date={startTime} />
                   </div>
                 </div>
                 <div>
@@ -190,11 +196,11 @@ const Page2 = () => {
                       <p className="cxtxt" style={widthForMobile ? null : {flex: 1}}>Total Quantity</p>
                       <div className="ctbox" >
                         <div class="d-flex">
-                          <span class="minus" onClick={() => decrement()}>
+                          <span class="minus">
                             -
                           </span>
                           <input class="dytxt" type="text" value={counter} />
-                          <span class="plus" onClick={() => increment()}>
+                          <span class="plus">
                             +
                           </span>
                         </div>
@@ -280,8 +286,10 @@ const Page2 = () => {
                   </div>
                 </div> */}
                 <div className="flex-center">
-                  {/* <img className="bbtn" src={"/images/new/wbtn2.png"} onClick={mintNft}/> */}
+                  {Number(userMinted) < 1 ? 
                   <MintBtn loading={loading} onClick={mintNft} />
+                  : <DisBtn textForButton={`User can only mint one weapon`}/>
+                  }
                 </div>
               </div>
             </div>
