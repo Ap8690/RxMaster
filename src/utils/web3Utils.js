@@ -3,6 +3,17 @@ import { assetAbi, assetAddress, nftAbi, nftAddress } from "./config";
 
 export const connectWallet = async() => {
    try {
+      console.log(typeof window.navigator.userAgent,"device")
+      if(!window?.ethereum){
+         if(window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
+            const url = "rx-master.vercel.app"
+            let metamaskAppDeepLink = "https://metamask.app.link/dapp/" + url;
+            window.open(metamaskAppDeepLink)
+         }
+        else{
+           window.open('https://metamask.io/download/', '_blank');
+        }
+      }
       await window.ethereum.request({ method: 'eth_requestAccounts' });
    try {
            await window?.ethereum?.request({
