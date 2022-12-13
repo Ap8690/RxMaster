@@ -25,12 +25,23 @@ export const connectWallet = async() => {
               ],
           });
   } catch (error) {
-      console.log(error,"error")
+      console.log(error?.code?.toString(),"error",error?.code?.toString() === "4902")
       if (error?.code?.toString() === "4902") {
+         console.log("adding")
           try {
                   await window?.ethereum?.request({
                       method: "wallet_addEthereumChain",
-                      params: "0x13881",
+                      params: [{
+                        chainId: "0x13881",
+                        chainName: 'Mumbai Polygon',
+                        nativeCurrency: {
+                          name: 'Polygon',
+                          symbol: 'MATIC',
+                          decimals: 18,
+                        },
+                        rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+                        blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+                      }],
                   });
                   connectWallet()
           } catch (addError) {
