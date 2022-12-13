@@ -93,7 +93,7 @@ const Page2 = () => {
   const [price, setPrice] = React.useState(0)
   const [address,setAddress]= React.useState('')
   const [totalSupply,setTotalSupply]= React.useState(0)
-  const [endTime,setEndTime]= React.useState(new Date('07-25-2023'))
+  const [endTime,setEndTime]= React.useState(new Date('07-25-2021'))
   const [loading, setLoading] = useState(false)
 
   const getData = async() =>{

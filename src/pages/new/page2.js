@@ -49,8 +49,8 @@ const Page2 = () => {
   const [totalSupply,setTotalSupply]= React.useState(0)
   const [isWhileList,setIsWhiteList]= React.useState(false)
   const [totalMinted,setTotalMinted]= React.useState(0)
-  const [endTime,setEndTime]= React.useState(new Date("07-25-2023"))
-  const [startTime,setStartTime]= React.useState(new Date("07-25-2023"))
+  const [endTime,setEndTime]= React.useState(new Date("07-25-2021"))
+  const [startTime,setStartTime]= React.useState(new Date("07-25-2021"))
   const [loading, setLoading] = React.useState(false)
   const [wlMintByUser, setWlMintByUser] = React.useState(0)
 

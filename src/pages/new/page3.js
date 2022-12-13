@@ -47,7 +47,7 @@ const Page2 = () => {
   const [details,setDetails]= React.useState(0)
   const [loading, setLoading] = React.useState(false)
   const [userMinted, setUserMinted] = React.useState(0)
-  const [startTime,setStartTime]= React.useState(new Date("07-25-2023"))
+  const [startTime,setStartTime]= React.useState(new Date("07-25-2021"))
 
   const increment = () => setCounter(counter + 1);
 
