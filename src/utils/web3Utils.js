@@ -42,7 +42,7 @@ export const connectWallet = async() => {
 }
 
 const getWeb3 = () =>{
-   return new Web3(Web3.givenProvider)
+   return new Web3(Web3.givenProvider || "https://polished-evocative-layer.matic-testnet.quiknode.pro/eff92fb3750e78c45cf3e41d9ca2791a94bb73ed/")
 }
 
 export const getAccount = async() =>{
