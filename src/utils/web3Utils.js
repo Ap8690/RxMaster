@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import Web3 from "web3";
 import { assetAbi, assetAddress, nftAbi, nftAddress } from "./config";
 
@@ -9,6 +10,7 @@ export const connectWallet = async() => {
             const url = "rx-master.vercel.app"
             let metamaskAppDeepLink = "https://metamask.app.link/dapp/" + url;
             window.open(metamaskAppDeepLink)
+            toast.error("Please switch to polygon testnet!")
          }
         else{
            window.open('https://metamask.io/download/', '_blank');
