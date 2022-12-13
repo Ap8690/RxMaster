@@ -14,9 +14,9 @@ export const connectWallet = async() => {
            window.open('https://metamask.io/download/', '_blank');
         }
       }
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      await window?.ethereum.request({ method: 'eth_requestAccounts' });
    try {
-           await window?.ethereum?.request({
+           await ethereum?.request({
               method: "wallet_switchEthereumChain",
               params: [
                   {
@@ -29,7 +29,7 @@ export const connectWallet = async() => {
       if (error?.code?.toString() === "4902") {
          console.log("adding")
           try {
-                  await window?.ethereum?.request({
+                  await ethereum?.request({
                       method: "wallet_addEthereumChain",
                       params: [{
                         chainId: "0x13881",
