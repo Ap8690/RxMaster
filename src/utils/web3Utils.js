@@ -11,7 +11,7 @@ export const connectWallet = async() => {
             const url = location.href.split('://')[1]
             let metamaskAppDeepLink = "https://metamask.app.link/dapp/" + url;
             window.open(metamaskAppDeepLink)
-            toast.error("Please switch to polygon testnet!")
+            // toast.error("Please switch to polygon testnet!")
          }
         else{
            window.open('https://metamask.io/download/', '_blank');
@@ -48,10 +48,12 @@ export const connectWallet = async() => {
                   });
                   connectWallet()
           } catch (addError) {
-              throw new Error(addError);
+            toast.error("Please switch to polygon mumbai network")
+            throw new Error(addError);
           }
       } else {
-          throw new Error(error);
+         toast.error("Please switch to polygon mumbai network")
+         throw new Error(error);
       }
   }
    if(window.ethereum){
