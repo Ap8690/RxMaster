@@ -7,7 +7,8 @@ export const connectWallet = async() => {
       console.log(typeof window.navigator.userAgent,"device")
       if(!window?.ethereum){
          if(window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
-            const url = "rx-master.vercel.app"
+            const location = window.location;
+            const url = location.href.split('://')[1]
             let metamaskAppDeepLink = "https://metamask.app.link/dapp/" + url;
             window.open(metamaskAppDeepLink)
             toast.error("Please switch to polygon testnet!")
